@@ -49,4 +49,7 @@ module Sinatra
     end
 
   end
+
+  register ConfigFile
+
 end
