@@ -1,5 +1,5 @@
 Sinatra::ConfigFile
-=======================
+===================
 
 Adds YAML config file support to [Sinatra](http://sinatrarb.com).
 
