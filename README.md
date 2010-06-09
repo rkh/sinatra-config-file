@@ -17,7 +17,7 @@ Check it out if you are looking for other fancy Sinatra extensions.
 Installation
 ------------
 
-    gem install sinatra-config-file --prerelease
+    gem install sinatra-config-file
 
 Example
 -------
