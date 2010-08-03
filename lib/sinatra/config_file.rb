@@ -1,32 +1,35 @@
-require "sinatra/base"
-require "sinatra/sugar"
+require 'sinatra/base'
 
 module Sinatra
   module ConfigFile
-
     unless defined? Parser
-      begin
-        require "psych"
-        Parser = Psych
+      Parser = begin
+        require 'psych'
+        Psych
       rescue LoadError
-        require "yaml"
-        Parser = YAML
+        require 'yaml'
+        YAML
       end
     end
 
-    def self.registered(klass)
-      klass.register Sugar
-    end
-
     def config_file(*paths)
-      paths.each do |pattern|
-        files = root_glob(pattern.to_s)
-        files.each { |f| Parser.load_file(f).each_pair { |k,v| set k, v unless methods(false).any? { |m| m.to_s = k.to_s } } }
-        warn "WARNING: could not load config file #{pattern}" if files.empty?
+      files = paths.map do |pattern|
+        Dir[pattern].tap do |match|
+          if match.empty?
+            warn "WARNING: could not load config file #{pattern}"
+          end
+        end
+      end.flatten.sort
+
+      files.each do |file|
+        Parser.load_file(file).each_pair do |key, value|
+          unless methods(false).include? key
+            set key, value
+          end
+        end
       end
     end
   end
 
   register ConfigFile
-
 end
