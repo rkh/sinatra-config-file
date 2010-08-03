@@ -21,7 +21,14 @@ module Sinatra
     def config_file(*paths)
       paths.each do |pattern|
         files = root_glob(pattern.to_s)
-        files.each { |f| Parser.load_file(f).each_pair { |k,v| set k, v unless methods(false).any? { |m| m.to_s = k.to_s } } }
+        files.each do |file|
+          yaml = Parser.load_file(file) || {}
+          yaml.each_pair do |key, value|
+            unless methods(false).include? key
+              set key, value
+            end
+          end
+        end
         warn "WARNING: could not load config file #{pattern}" if files.empty?
       end
     end
