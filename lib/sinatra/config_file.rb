@@ -22,7 +22,8 @@ module Sinatra
       end.flatten.sort
 
       files.each do |file|
-        Parser.load_file(file).each_pair do |key, value|
+        yaml = Parser.load_file(file) || {}
+        yaml.each_pair do |key, value|
           unless methods(false).include? key
             set key, value
           end
