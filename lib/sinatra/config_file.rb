@@ -3,7 +3,6 @@ require "sinatra/sugar"
 
 module Sinatra
   module ConfigFile
-
     unless defined? Parser
       begin
         require "psych"
@@ -24,9 +23,7 @@ module Sinatra
         files.each do |file|
           yaml = Parser.load_file(file) || {}
           yaml.each_pair do |key, value|
-            unless methods(false).include? key
-              set key, value
-            end
+            set key, value unless methods(false).any? { |m| m.to_s = key.to_s }
           end
         end
         warn "WARNING: could not load config file #{pattern}" if files.empty?
@@ -35,5 +32,4 @@ module Sinatra
   end
 
   register ConfigFile
-
 end
