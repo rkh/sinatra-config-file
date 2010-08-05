@@ -14,7 +14,7 @@ SPEC = Gem::Specification.new do |s|
   s.add_development_dependency "rspec", ">= 1.3.0"
 
   # Those should be about the same in any BigBand extension.
-  s.authors          = ["Konstantin Haase"]
+  s.authors          = ["Konstantin Haase", "Dmitry A. Ustalov"]
   s.email            = "konstantin.mailinglists@googlemail.com"
   s.files            = Dir["**/*.{rb,md}"] << "LICENSE"
   s.has_rdoc         = 'yard'
