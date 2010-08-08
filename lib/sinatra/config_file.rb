@@ -2,14 +2,12 @@ require 'sinatra/base'
 
 module Sinatra
   module ConfigFile
-    unless defined? Parser
-      Parser = begin
-        require 'psych'
-        Psych
-      rescue LoadError
-        require 'yaml'
-        YAML
-      end
+    Parser ||= begin
+      require 'psych'
+      Psych
+    rescue LoadError
+      require 'yaml'
+      YAML
     end
 
     def config_file(*paths)
