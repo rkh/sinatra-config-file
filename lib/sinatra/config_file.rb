@@ -2,13 +2,13 @@ require 'sinatra/base'
 
 module Sinatra
   module ConfigFile
-    Parser ||= begin
+    Parser = begin
       require 'psych'
       Psych
     rescue LoadError
       require 'yaml'
       YAML
-    end
+    end unless defined? Parser
 
     def config_file(*paths)
       files = paths.map do |pattern|
