@@ -19,7 +19,7 @@ module Sinatra
 
     def config_file(*paths)
       paths.each do |pattern|
-        files = root_glob(pattern.to_s)
+        files = root_glob(pattern.to_s).to_a
         files.each do |file|
           yaml = Parser.load_file(file) || {}
           yaml.each_pair do |key, value|
