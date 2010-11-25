@@ -1,5 +1,4 @@
-require "sinatra/base"
-require "sinatra/sugar"
+require 'sinatra/base'
 
 module Sinatra
   module ConfigFile

@@ -4,14 +4,7 @@ Sinatra::ConfigFile
 Adds YAML config file support to [Sinatra](http://sinatrarb.com).
 
 Config files are expected to represent hashes. When parsing such a config file it will use set to store that value,
-ignoring those directly defined in the app (not those defined by the class it inherits from, i.e. Sinatra::Base or
-Sinatra::BigBand).
-
-BigBand
--------
-
-Sinatra::ConfigFile is part of the [BigBand](http://github.com/rkh/big_band) stack.
-Check it out if you are looking for other fancy Sinatra extensions.
+ignoring those directly defined in the app (not those defined by the class it inherits from, i.e. Sinatra::Base).
 
 
 Installation
