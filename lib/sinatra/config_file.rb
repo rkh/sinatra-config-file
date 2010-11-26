@@ -18,7 +18,7 @@ module Sinatra
         files.each do |file|
           yaml = Parser.load_file(file) || {}
           yaml.each_pair do |key, value|
-            set key, value unless methods(false).include?(key.to_s)
+            set key, value unless methods(false).any? { |m| m.to_s == key.to_s }
           end
         end
         warn "WARNING: could not load config file #{pattern}" if files.empty?
