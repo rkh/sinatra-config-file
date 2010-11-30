@@ -1,4 +1,16 @@
 require 'sinatra/base'
+require 'pathname'
+
+class String
+  def expand_path
+    Pathname(self).expand_path.to_s
+  end
+
+  def file_join(other)
+    Pathname(self).join(other.to_s).to_s
+  end
+  alias / file_join
+end
 
 module Sinatra
   module ConfigFile
@@ -10,6 +22,16 @@ module Sinatra
         require "yaml"
         Parser = YAML
       end
+    end
+
+    def root_path(*args)
+      relative = File.join(*args)
+      return relative if relative.expand_path == relative
+      root.expand_path / relative
+    end
+
+    def root_glob(*args, &block)
+      Dir.glob(root_path(*args)).each(&block)
     end
 
     def config_file(*paths)
