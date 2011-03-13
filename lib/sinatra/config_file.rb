@@ -17,15 +17,17 @@ module Sinatra
     end
 
     def config_file(*paths)
-      paths.each do |pattern|
-        files = root_glob(pattern.to_s).to_a
-        files.each do |file|
-          yaml = Parser.load_file(file) || {}
-          yaml.each_pair do |key, value|
-            set key, value unless methods(false).any? { |m| m.to_s == key.to_s }
+      Dir.chdir root do
+        paths.each do |pattern|
+          files = Dir.glob pattern
+          files.each do |file|
+            yaml = Parser.load_file(file) || {}
+            yaml.each_pair do |key, value|
+              set key, value unless methods(false).any? { |m| m.to_s == key.to_s }
+            end
           end
+          warn "WARNING: could not load config file #{pattern}" if files.empty?
         end
-        warn "WARNING: could not load config file #{pattern}" if files.empty?
       end
     end
   end
