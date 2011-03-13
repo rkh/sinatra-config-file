@@ -12,10 +12,6 @@ module Sinatra
       end
     end
 
-    def self.registered(klass)
-      klass.register Sugar
-    end
-
     def config_file(*paths)
       Dir.chdir root do
         paths.each do |pattern|
