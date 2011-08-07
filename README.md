@@ -20,9 +20,9 @@ Example
 
     configure do |c|
       set :foo, "bar"
-      config_file "settings.yml"                  # general settings
-      config_file "#{c.environment}.settings.yml" # environment specific settings
-      foo # => "bar" (no matter what you put in your config file)
+      config_file "settings.yml",                 # general settings
+                  "#{c.environment}.settings.yml" # environment specific settings
+      foo # => "bar" (no matter what you put in your config files)
     end
 
 Now you could write in your settings.yml:
@@ -39,3 +39,18 @@ In you development.settings.yml:
 
     database:
       db_file: development.db
+
+Note
+----
+Each call to config_file is independent, such that if you do the following:
+
+  configure do |c|
+    config_file "settings.yml"
+    config_file "#{c.environment}.settings.yml"
+  end
+
+any keys in both files will only be pulled from "settings.yml", including
+hashes.
+
+However, when you specify both files in the same call, the settings in later
+files override the settings in earlier files.
