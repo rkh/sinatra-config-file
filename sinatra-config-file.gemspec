@@ -1,7 +1,7 @@
 SPEC = Gem::Specification.new do |s|
   # Get the facts.
   s.name             = "sinatra-config-file"
-  s.version          = "0.6.1"
+  s.version          = "0.6.1.1"
   s.description      = "Load Sinatra settings from a yaml file."
 
   # External dependencies
